@@ -6,7 +6,9 @@ import Feather from 'react-native-vector-icons/Feather'
 import InputField from '../Component/InputField'
 import RadioForm from 'react-native-simple-radio-button'
 import { useState } from 'react'
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 
+// import DateTimePicker from '@react-native-community/datetimepicker';
 
    const Register = ({navigation}) => {
       const [name, setName] = useState('');
@@ -15,10 +17,35 @@ import { useState } from 'react'
       const [confirmPassword, setConfirmPassword] = useState('');
       const [location, setLocation] = useState('');
       const [phoneNumber, setPhoneNumber] = useState('');
+      const [value, setValue] = useState(0);
+      const [open, setOpen] = useState(false);
+      const [date, setDate] = useState(new Date());
+      const [dobLabel, setDobLabel] = useState('');
+
+      const [mode, setMode] = useState('date');
+      const [show, setShow] = useState(false);
+    
+      const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+      };
+    
+      const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+      };
+    
+      const showDatepicker = () => {
+        showMode('date');
+      };
       const items=[
         {label:"Host",value:0},
         {label:"Passenger",value:1}
       ]
+      const handlePress = () => {
+        setOpen(!open); // Toggle the state (open/close)
+      };
     
      
       return (
@@ -77,7 +104,7 @@ import { useState } from 'react'
           />
             </TouchableOpacity>
     
-            <TouchableOpacity onPress={()=>{}}style={{borderColor:'#ddd', borderWidth:2, borderRadius:10, paddingHorizontal:20, paddingVertical:7}}>
+            <TouchableOpacity onPress={() => onFacebookButtonPress().then(() => console.log('Signed in with Facebook!'))}style={{borderColor:'#ddd', borderWidth:2, borderRadius:10, paddingHorizontal:20, paddingVertical:7}}>
             <Image source={require('../assets/images/icons/Facebook.png')} 
           style={{
           height: 30,
@@ -100,7 +127,7 @@ import { useState } from 'react'
           <Text style={{color:'black', fontWeight:'bold', fontSize: 15, marginBottom:20, marginLeft:'auto', marginRight:'auto'}}>
             Who are you Registering in as?
           </Text>
-         {/* 
+         {
           <RadioForm 
           radio_props={items} 
           buttonSize={20}
@@ -117,7 +144,7 @@ import { useState } from 'react'
            style={{marginLeft:'auto', marginRight:'auto'}}
        
            />
-        */}
+        }
          </View>
     
     {/* -----------------------------------------------Radio Button--------------------------------------------------------------- */}
@@ -187,28 +214,32 @@ import { useState } from 'react'
           color='#666'
           style={{marginRight:5}}
           />
-          <TouchableOpacity onPress={()=>{}}>
-            <Text style={{color:'#666', marginLeft:5,marginTop:5}}>Date of Birth </Text>
-           
-    
-          </TouchableOpacity>
+      <TouchableOpacity onPress={showDatepicker}>
+        <Text style={{color:'#666', marginLeft:5,marginTop:5}}>Date of Birth</Text>
+      </TouchableOpacity>
           </View> 
-          {/* <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode={'date'}
-          maximumDate={new Date('2005-01-01')}
-          minimumDate={new Date('1980-01-01')}
-          onConfirm={(date)=>{
-            setDate(false)
-            setOpen(date)
-            setDoblabel(date.toDateString());
-          }}
-          onCancel={()=>{
-            setOpen(false)
-          }}
-          /> */}
+
+        
+          {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+
+{value === 0 && (
+        <InputField
+          label={'Charging Location'}
+          icon={<Feather name='map-pin' size={20} color="#666" style={{ marginRight: 5, paddingVertical: 0 }} />}
+          inputType="text"
+          value={phoneNumber}
+          change={(text) => setPhoneNumber(text)}
+        />
+      )}
           {/* -------------------------------------- Button---------------------------"Already have an account"----------------- */}
           
             <TouchableOpacity onpress={()=>{}} style={{backgroundColor:'#ff9900',padding:20,borderRadius:15, marginBottom:30}}>
