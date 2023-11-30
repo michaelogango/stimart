@@ -7,8 +7,11 @@ import InputField from '../Component/InputField'
 import RadioForm from 'react-native-simple-radio-button'
 import { useState } from 'react'
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+import { Alert } from 'react-native'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-// import DateTimePicker from '@react-native-community/datetimepicker';
+import axios from 'axios';
+
 
    const Register = ({navigation}) => {
       const [name, setName] = useState('');
@@ -26,24 +29,85 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
       const [show, setShow] = useState(false);
       const [showAddLocation, setShowAddLocation] = useState(true);
       const [chargingLocations, setChargingLocations] = useState([]);
+      const [Username,setUserName]=useState('')
+
+
+    
+// Function to add a new charging location
+
+const showDatePicker = () => {
+  setShow(true);
+};
+const onSignUpPress = async () => {
+
+  try {
+  
+    if (password!== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match');
+      return;
+    }
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Password:', password);
+    console.log('Username:', Username);
+    console.log('Location:', location);
+    console.log('Phone Number:', phoneNumber);
+    console.log('Date of Birth:', date);
+    console.log('Charging Stations:', chargingLocations);
+    console.log('Role:', value);
+    
+    const response = await axios.post('https://c846-196-207-134-81.ngrok-free.app/users/signup', {
+      name,
+      email,
+      password,
+      Username,
+      role: value === 0 ? 'host' : 'passenger', // Assuming 0 represents 'host' in your RadioForm
+      location,
+      phoneNumber,
+      dob: date,
+      chargingStations: chargingLocations,
+    });
+    
+    // Assuming your backend sends a token upon successful registration
+    const { token } = response.data;
+    console.log(response.data);
+
+    // Save the token in your preferred storage method (AsyncStorage, Redux, etc.)
+    // Example using AsyncStorage:
+    // await AsyncStorage.setItem('token', token);
+
+    // Navigate to the 'Welcome' screen
+    const decodedToken = jwt.decode(token);
+
+    // Check the user's role
+    if (decodedToken.role === 'host') {
+      // Navigate to the 'WelcomeHost' screen
+      navigation.navigate('WelcomeHost');
+    } else {
+      // Navigate to the 'Welcome' screen
+      navigation.navigate('Welcome');
+    }
+  } catch (error) {
+    console.error('Error during signup:', error);
+    Alert.alert('Error', 'Registration failed. Please try again.',error);
+  }
+};
+
+// Function to update a charging location
+
+
 
       const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
       };
+  
     
-      const showMode = (currentMode) => {
-        setShow(true);
-        setMode(currentMode);
-      };
-    
-      const showDatepicker = () => {
-        showMode('date');
-      };
+  
       const items=[
-        {label:"Host",value:0},
-        {label:"Passenger",value:1}
+        {label:"Admin",value:0},
+        {label:"Customer",value:1}
       ]
       const handlePress = () => {
         setOpen(!open); // Toggle the state (open/close)
@@ -52,11 +116,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
         setShowAddLocation(!showAddLocation);
       };
     
-      const addChargingLocation = () => {
-        setChargingLocations([...chargingLocations, location]);
-        setLocation(''); // Clear the input field after adding a location
-      };
-    
+
      
       return (
         <ScrollView style={{
@@ -160,38 +220,48 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
     {/* -----------------------------------------------Radio Button--------------------------------------------------------------- */}
     
     
-    
     <InputField 
-            label={'Full Name'}
+            label={'Full name'}
             icon={<Ionicons name='person-outline' 
           size={20}
           color='#666'
           style={{marginRight:5}}
+          ></Ionicons>}
+          value={name} // Pass the state variable
           change={(text) => setName(text)}
           />
-          // onChangeText={setName}
-        }
-          /> 
+       
+            
+    <InputField 
+            label={'Username'}
+            icon={<Ionicons name='person-outline' 
+          size={20}
+          color='#666'
+          style={{marginRight:5}}
+          ></Ionicons>}
+          value={Username} // Pass the state variable
+          change={(text) => setUserName(text)}
+          />
+        
+
+
      <InputField
-          label={'Email ID'}
+          label={'Email '}
          icon= {<MaterialIcons name='alternate-email' size={20} 
          color="#666" 
          style={{marginRight:5, paddingVertical:0}}
-         //change={(text)=> setEmail(text)}
-         />}
-        
+         ></MaterialIcons>}
+         value={email} // Pass the state variable
+         change={(text) => setEmail(text)} // Pass the state update function
           />
     
     <InputField
-          label={'Phone Number'}
-         icon= {<Feather name='phone' 
-         size={20} 
-         color="#666" 
-         style={{marginRight:5, paddingVertical:0}}/>}
-         inputType="numeric"
-         //change={(text)=> setPhoneNumber(text)}
-         
-          />
+        label={'Phone Number'}
+        icon={<Feather name='phone' size={20} color="#666" style={{ marginRight: 5, paddingVertical: 0 }} />}
+        inputType="numeric"
+        value={phoneNumber} // Pass the state variable
+        change={(text) => setPhoneNumber(text)} // Pass the state update function
+      />
     
     
     <InputField
@@ -200,17 +270,24 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
          size={20} color="#666" 
          style={{marginRight:5, paddingVertical:0}}/>}
          inputType="password"
-         //change={(text)=> setPassword(text)}
+         value={password} // Pass the state variable
+         change={(text) => setPassword(text)} // Pass the state update function
+       
           />
     
     <InputField
           label={'Confirm Password'}
          icon= {<Ionicons name='ios-lock-closed' size={20} color="#666" style={{marginRight:5, paddingVertical:0}}/>}
          inputType="password"
+         value={confirmPassword} // Pass the state variable
+         change={(text) => setConfirmPassword(text)} // Pass the state update function
           />
            <InputField
           label={'Location'}
          icon= {<MaterialIcons name='alternate-email' size={20} color="#666" style={{marginRight:5, paddingVertical:0}}/>}
+         inputType="text"
+         value={location} // Pass the state variable
+         change={(text) => setLocation(text)} // Pass the state update function
         
           />
     
@@ -224,36 +301,41 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
           color='#666'
           style={{marginRight:5}}
           />
-      <TouchableOpacity onPress={showDatepicker}>
+      <TouchableOpacity  onPress={showDatePicker}>
         <Text style={{color:'#666', marginLeft:5,marginTop:5}}>Date of Birth</Text>
       </TouchableOpacity>
           </View> 
-
-        
           {show && (
         <DateTimePicker
-          testID="dateTimePicker"
           value={date}
-          mode={mode}
-          is24Hour={true}
+          mode="date"
           display="default"
           onChange={onChange}
         />
       )}
+      {date && (
+  <View >
+    <Text style={{ color: 'black', fontSize: 18 }}>
+      Selected Date: {date.toLocaleDateString()}
+    </Text>
+  </View>
+)}
+      
+     
 
 {value === 0 && (
         <InputField
           label={'Charging Location'}
           icon={<Feather name='map-pin' size={20} color="#666" style={{ marginRight: 5, paddingVertical: 0 }} />}
           inputType="text"
-          value={phoneNumber}
-          change={(text) => setPhoneNumber(text)}
+          value={chargingLocations}
+          change={(text) => setChargingLocations(text)}
         />
       )}
 
           {/* -------------------------------------- Button---------------------------"Already have an account"----------------- */}
           
-            <TouchableOpacity onpress={()=>{}} style={{backgroundColor:'#ff9900',padding:20,borderRadius:15, marginBottom:30}}>
+          <TouchableOpacity onPress={onSignUpPress} style={{backgroundColor:'#ff9900', padding:20, borderRadius:15, marginBottom:30}}>
             <Text style={{color:'#fff', fontWeight:'700' , fontSize:16, textAlign:'center'}}>Register</Text>
             </TouchableOpacity>
            
