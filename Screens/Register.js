@@ -60,7 +60,7 @@ const onSignUpPress = async () => {
       name,
       email,
       password,
-      Username,
+      username:Username,
       role: value === 0 ? 'host' : 'passenger', // Assuming 0 represents 'host' in your RadioForm
       location,
       phoneNumber,
@@ -70,6 +70,7 @@ const onSignUpPress = async () => {
     
     // Assuming your backend sends a token upon successful registration
     const { token } = response.data;
+    const {role} = response.data
     console.log(response.data);
 
     // Save the token in your preferred storage method (AsyncStorage, Redux, etc.)
@@ -77,14 +78,15 @@ const onSignUpPress = async () => {
     // await AsyncStorage.setItem('token', token);
 
     // Navigate to the 'Welcome' screen
-    const decodedToken = jwt.decode(token);
-
+console.log(role)
     // Check the user's role
-    if (decodedToken.role === 'host') {
+    if (role === 'host') {
       // Navigate to the 'WelcomeHost' screen
+      console.log("hereeeee")
       navigation.navigate('WelcomeHost');
     } else {
       // Navigate to the 'Welcome' screen
+      console.log("naahh")
       navigation.navigate('Welcome');
     }
   } catch (error) {
@@ -330,7 +332,7 @@ const onSignUpPress = async () => {
   inputType="text"
   keyboardType="default"
   change={(selectedLocation) => setChargingLocations(selectedLocation)}
-  value={chargingLocations[0]}
+  value={chargingLocations}
   isLocationInput={true}
 />
       )}
