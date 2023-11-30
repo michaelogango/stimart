@@ -46,6 +46,14 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
       const handlePress = () => {
         setOpen(!open); // Toggle the state (open/close)
       };
+      const handlePresss = () => {
+        setShowAddLocation(!showAddLocation);
+      };
+    
+      const addChargingLocation = () => {
+        setChargingLocations([...chargingLocations, location]);
+        setLocation(''); // Clear the input field after adding a location
+      };
     
      
       return (
@@ -239,6 +247,20 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
           value={phoneNumber}
           change={(text) => setPhoneNumber(text)}
         />
+      )}
+       {showAddLocation && (
+        <View>
+          <InputField
+            label={'Charging Location'}
+            icon={<Feather name='map-pin' size={20} color="#666" style={{ marginRight: 5, paddingVertical: 0 }} />}
+            inputType="text"
+            value={location}
+            change={(text) => setLocation(text)}
+          />
+          <TouchableOpacity onPress={addChargingLocation}>
+            <Text>Add Charging Location</Text>
+          </TouchableOpacity>
+        </View>
       )}
           {/* -------------------------------------- Button---------------------------"Already have an account"----------------- */}
           
