@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import InputField from '../Component/InputField'
 import RadioForm from 'react-native-simple-radio-button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { Alert } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -32,7 +32,7 @@ import axios from 'axios';
       const [Username,setUserName]=useState('')
 
 
-    
+     
 // Function to add a new charging location
 
 const showDatePicker = () => {
@@ -324,13 +324,15 @@ const onSignUpPress = async () => {
      
 
 {value === 0 && (
-        <InputField
-          label={'Charging Location'}
-          icon={<Feather name='map-pin' size={20} color="#666" style={{ marginRight: 5, paddingVertical: 0 }} />}
-          inputType="text"
-          value={chargingLocations}
-          change={(text) => setChargingLocations(text)}
-        />
+  <InputField
+  label={'Charging Location'}
+  icon= {<Ionicons name='ios-lock-closed' size={20} color="#666" style={{marginRight:5, paddingVertical:0}}/>}
+  inputType="text"
+  keyboardType="default"
+  change={(selectedLocation) => setChargingLocations(selectedLocation)}
+  value={chargingLocations[0]}
+  isLocationInput={true}
+/>
       )}
 
           {/* -------------------------------------- Button---------------------------"Already have an account"----------------- */}
