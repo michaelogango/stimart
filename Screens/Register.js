@@ -24,7 +24,9 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 
       const [mode, setMode] = useState('date');
       const [show, setShow] = useState(false);
-    
+      const [showAddLocation, setShowAddLocation] = useState(true);
+      const [chargingLocations, setChargingLocations] = useState([]);
+
       const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -248,20 +250,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
           change={(text) => setPhoneNumber(text)}
         />
       )}
-       {showAddLocation && (
-        <View>
-          <InputField
-            label={'Charging Location'}
-            icon={<Feather name='map-pin' size={20} color="#666" style={{ marginRight: 5, paddingVertical: 0 }} />}
-            inputType="text"
-            value={location}
-            change={(text) => setLocation(text)}
-          />
-          <TouchableOpacity onPress={addChargingLocation}>
-            <Text>Add Charging Location</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+
           {/* -------------------------------------- Button---------------------------"Already have an account"----------------- */}
           
             <TouchableOpacity onpress={()=>{}} style={{backgroundColor:'#ff9900',padding:20,borderRadius:15, marginBottom:30}}>
