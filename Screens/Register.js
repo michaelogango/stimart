@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react'
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { Alert } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
-
 import axios from 'axios';
 
 
@@ -24,7 +23,6 @@ import axios from 'axios';
       const [open, setOpen] = useState(false);
       const [date, setDate] = useState(new Date());
       const [dobLabel, setDobLabel] = useState('');
-
       const [mode, setMode] = useState('date');
       const [show, setShow] = useState(false);
       const [showAddLocation, setShowAddLocation] = useState(true);
@@ -61,7 +59,7 @@ const onSignUpPress = async () => {
       email,
       password,
       username:Username,
-      role: value === 0 ? 'host' : 'passenger', // Assuming 0 represents 'host' in your RadioForm
+      role: value === 0 ? 'Admin' : 'Customer', // Assuming 0 represents 'host' in your RadioForm
       location,
       phoneNumber,
       dob: date,
@@ -317,7 +315,7 @@ console.log(role)
       )}
       {date && (
   <View >
-    <Text style={{ color: 'black', fontSize: 18 }}>
+    <Text style={{ color: '#666', fontSize: 12 }}>
       Selected Date: {date.toLocaleDateString()}
     </Text>
   </View>

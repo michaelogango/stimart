@@ -11,6 +11,7 @@ export default function InputField({
   value,
   isLocationInput = false,
 }) {
+
   return (
     <View style={{ marginBottom: 25 }}>
       {icon}
@@ -30,6 +31,8 @@ export default function InputField({
           placeholder={label}
           onPress={(data, details = null) => {
             const placeId = data.place_id;
+            console.log('we are hhhhhhhheeeeeerrrrrrreeeeee')
+            console.log('Place ID:', placeId);
             axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=AIzaSyCkJueJ-kYff4oR_aqwM3Ot5oIln8ikJx0`)
               .then(response => {
                 if (response.data.result.geometry) {
