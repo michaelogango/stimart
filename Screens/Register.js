@@ -55,7 +55,7 @@ const onSignUpPress = async () => {
     console.log('Charging Stations:', chargingLocations);
     console.log('Role:', value);
     
-    const response = await axios.post('https://3a65-196-207-134-81.ngrok-free.app/users/signup', {
+    const response = await axios.post('https://6c8d-196-207-134-81.ngrok-free.app/users/signup', {
       name,
       email,
       password,
@@ -77,16 +77,16 @@ const onSignUpPress = async () => {
     // await AsyncStorage.setItem('token', token);
 
     // Navigate to the 'Welcome' screen
-console.log(role)
+    console.log("here is role ", role)
     // Check the user's role
-    if (role === 'host') {
+    if (role === "Admin") {
       // Navigate to the 'WelcomeHost' screen
       console.log("hereeeee")
       navigation.navigate('AdminDash');
-    } else {
+    } 
+    if (role === "Customer") {
       // Navigate to the 'Welcome' screen
       console.log("naahh")
-      navigation.navigate('home');
     }
   } catch (error) {
     console.error('Error during signup:', error);
@@ -283,14 +283,7 @@ console.log(role)
          value={confirmPassword} // Pass the state variable
          change={(text) => setConfirmPassword(text)} // Pass the state update function
           />
-           <InputField
-          label={'Location'}
-         icon= {<MaterialIcons name='alternate-email' size={20} color="#666" style={{marginRight:5, paddingVertical:0}}/>}
-         inputType="text"
-         value={location} // Pass the state variable
-         change={(text) => setLocation(text)} // Pass the state update function
-        
-          />
+   
     
           {/* --------------------------------------------End of Input Fields---------------------------------------------- */}
     
@@ -337,7 +330,8 @@ console.log(role)
           const location = response.data.result.geometry.location;
           console.log('Location:', location); // Logs { lat: ..., lng: ... }
           const { lat, lng } = location;
-          change({ name: data.description, coordinates: [lng, lat] });
+          console.log(lat, lng)
+          setChargingLocations({ name: data.description, coordinates: [lng, lat] });
         } else {
           console.log('Location details are not available');
         }
