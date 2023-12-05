@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 //import GoogleSVG from '../assets/images/icons/Google.svg'
 
 const Login = ({navigation}) => {
@@ -20,7 +22,12 @@ const Login = ({navigation}) => {
       })
 
       if (response.status === 200) {
+        
         console.log('response', response.data)
+      // Store the token in local storage
+      console.log("token",response.data.token)
+      const token = response.data.token;
+      await AsyncStorage.setItem('token', token);
         if (response.data.role === 'Admin') {
           navigation.navigate('AdminDash')
         } 
