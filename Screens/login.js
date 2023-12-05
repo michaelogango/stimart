@@ -20,9 +20,11 @@ const Login = ({navigation}) => {
       })
 
       if (response.status === 200) {
-        if (response.data.role === 'admin') {
+        console.log('response', response.data)
+        if (response.data.role === 'Admin') {
           navigation.navigate('AdminDash')
-        } else {
+        } 
+        if (response.data.role === 'Customer') {
           navigation.navigate('Welcome')
         }
       }
