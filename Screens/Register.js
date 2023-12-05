@@ -80,13 +80,13 @@ const onSignUpPress = async () => {
     console.log("here is role ", role)
     // Check the user's role
     if (role === "Admin") {
-      // Navigate to the 'WelcomeHost' screen
+      // Navigate to the 'Welcom eHost' screen
       console.log("hereeeee")
       navigation.navigate('AdminDash');
     } 
-    if (role === "Customer") {
-      // Navigate to the 'Welcome' screen
-      console.log("naahh")
+    else{
+      navigation.navigate('Welcome');
+      console.log("naahh")a
     }
   } catch (error) {
     console.error('Error during signup:', error);
