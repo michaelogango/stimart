@@ -54,7 +54,7 @@ const onSignUpPress = async () => {
     console.log('Charging Stations:', chargingLocations);
     console.log('Role:', value);
     
-    const response = await axios.post('https://c846-196-207-134-81.ngrok-free.app/users/signup', {
+    const response = await axios.post('https://3a65-196-207-134-81.ngrok-free.app/users/signup', {
       name,
       email,
       password,
@@ -81,11 +81,11 @@ console.log(role)
     if (role === 'host') {
       // Navigate to the 'WelcomeHost' screen
       console.log("hereeeee")
-      navigation.navigate('WelcomeHost');
+      navigation.navigate('AdminDash');
     } else {
       // Navigate to the 'Welcome' screen
       console.log("naahh")
-      navigation.navigate('Welcome');
+      navigation.navigate('home');
     }
   } catch (error) {
     console.error('Error during signup:', error);

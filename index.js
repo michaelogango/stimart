@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 //screens
-import {Login,Register, Welcome} from "./Screens/index";
+import {Login,Register,Welcome} from "./Screens/index";
 
 const Stack = createStackNavigator();
 export default function () {
