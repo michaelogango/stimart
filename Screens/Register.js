@@ -337,7 +337,8 @@ console.log(role)
           const location = response.data.result.geometry.location;
           console.log('Location:', location); // Logs { lat: ..., lng: ... }
           const { lat, lng } = location;
-          change({ name: data.description, coordinates: [lng, lat] });
+          console.log(lat,lng)
+          setLocation({ name: data.description, coordinates: [lng, lat] });
         } else {
           console.log('Location details are not available');
         }
