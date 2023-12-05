@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-nativ
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Import the FontAwesome icon from react-native-vector-icons
 import { RadioButton } from 'react-native-paper';
+import Additems from '../Component/additems';
+import Dashboardscreen from '../Component/DashboardScreen';
 
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Welcome to Your Dashboard</Text>
-      {/* Your dashboard content goes here */}
+      <Dashboardscreen/>
+     
     </View>
   );
 };
@@ -16,8 +18,7 @@ const HomeScreen = () => {
 const AddItemScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Add Item</Text>
-      {/* Add item form or content goes here */}
+      <Additems/>
     </View>
   );
 };
