@@ -86,7 +86,7 @@ const onSignUpPress = async () => {
     } 
     else{
       navigation.navigate('Welcome');
-      console.log("naahh")a
+      console.log("naahh")
     }
   } catch (error) {
     console.error('Error during signup:', error);
