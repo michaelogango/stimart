@@ -51,8 +51,7 @@ export default function InputField({
             key: 'AIzaSyCkJueJ-kYff4oR_aqwM3Ot5oIln8ikJx0',
             language: 'en',
             components: 'country:ke', // Limit results to Kenya
-            fields: ['geometry'], // Add this line
-
+            
         }}
           styles={{
             textInput: { flex: 1, paddingVertical: 0, borderBottomColor: '#ccc', borderBottomWidth: 1 },

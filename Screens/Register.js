@@ -10,6 +10,7 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import { Alert } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
    const Register = ({navigation}) => {
@@ -324,14 +325,36 @@ console.log(role)
      
 
 {value === 0 && (
-  <InputField
-  label={'Charging Location'}
-  icon= {<Ionicons name='ios-lock-closed' size={20} color="#666" style={{marginRight:5, paddingVertical:0}}/>}
-  inputType="text"
-  keyboardType="default"
-  change={(selectedLocation) => setChargingLocations(selectedLocation)}
-  value={chargingLocations}
-  isLocationInput={true}
+  <GooglePlacesAutocomplete
+  placeholder={'Add a charging location'}
+  onPress={(data, details = null) => {
+    const placeId = data.place_id;
+    console.log('we are hhhhhhhheeeeeerrrrrrreeeeee')
+    console.log('Place ID:', placeId);
+    axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=AIzaSyC6EFdTlrjLRjiLEzHoauP2CXM9ZLPHUgo`)
+      .then(response => {
+        if (response.data.result.geometry) {
+          const location = response.data.result.geometry.location;
+          console.log('Location:', location); // Logs { lat: ..., lng: ... }
+          const { lat, lng } = location;
+          change({ name: data.description, coordinates: [lng, lat] });
+        } else {
+          console.log('Location details are not available');
+        }
+      })
+      .catch(error => console.error(error));
+  }}
+  
+  query={{
+    key: 'AIzaSyC6EFdTlrjLRjiLEzHoauP2CXM9ZLPHUgo',
+    language: 'en',
+    components: 'country:ke', // Limit results to Kenya
+    
+}}
+  styles={{
+    textInput: { flex: 1, paddingVertical: 0, borderBottomColor: '#ccc', borderBottomWidth: 1 },
+  }}
+  
 />
       )}
 

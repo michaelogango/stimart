@@ -12,7 +12,7 @@ export default function App() {
         <NavigationContainer>
             <SafeAreaView style={styles.safeArea}>
             <Stack.Navigator
-      initialRouteName="AdminDash">
+      initialRouteName="Register">
         <Stack.Screen name="Welcome" component={Welcome} options={{headerShown:false}}/>
 
         <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
