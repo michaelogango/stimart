@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, TextInput,ScrollView,TouchableOpacity} from 'react-native'
 import { SafeAreaView } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather'
 import InputField from '../Component/InputField'
 import RadioForm from 'react-native-simple-radio-button'
@@ -11,6 +11,7 @@ import { Alert } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
    const Register = ({navigation}) => {
@@ -71,10 +72,8 @@ const onSignUpPress = async () => {
     const { token } = response.data;
     const {role} = response.data
     console.log(response.data);
-
-    // Save the token in your preferred storage method (AsyncStorage, Redux, etc.)
-    // Example using AsyncStorage:
-    // await AsyncStorage.setItem('token', token);
+    
+    await AsyncStorage.setItem('token', token);
 
     // Navigate to the 'Welcome' screen
     console.log("here is role ", role)
@@ -85,7 +84,7 @@ const onSignUpPress = async () => {
       navigation.navigate('AdminDash');
     } 
     else{
-      navigation.navigate('Welcome');
+      navigation.navigate('HomeScreen');
       console.log("naahh")
     }
   } catch (error) {

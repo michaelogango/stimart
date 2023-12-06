@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import {setDestination, setOrigin} from '../Slices/navslice'
 import NavFavourites from '../Component/NavFavourites'
 
-const apikey='AIzaSyAQdNGyUCoUwUsu1wQpwcN6YBst3f_G7vU'
+const apikey='AIzaSyC6EFdTlrjLRjiLEzHoauP2CXM9ZLPHUgo'
 
 
 

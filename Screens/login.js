@@ -32,7 +32,7 @@ const Login = ({navigation}) => {
           navigation.navigate('AdminDash')
         } 
         if (response.data.role === 'Customer') {
-          navigation.navigate('Welcome')
+          navigation.navigate('HomeScreen')
         }
       }
     } catch (error) {

@@ -98,7 +98,7 @@ const RideOptions = ({navigation}) => {
       />
     <View>
       <TouchableOpacity disabled={!selected} style={tw`bg-black py-3 m-4 rounded-md ${!selected && "bg-gray-300"}`}>
-        <Text style={tw`text-center text-white text-lg `}>Choose {selected?.title}</Text>
+        <Text style={tw`text-center text-white text-lg `}>Choose {selected?.locationName}</Text>
       </TouchableOpacity>
     </View>
 
