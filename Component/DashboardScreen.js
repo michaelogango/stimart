@@ -1,31 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 const DashboardScreen = () => {
+  const [numberOfStations, setNumberOfStations] = useState(0);
+  const [amountOfCharge, setAmountOfCharge] = useState(0);
+  const [moneyReceived, setMoneyReceived] = useState(0);
+
+  useEffect(() => {
+    // Make a GET request to fetch dashboard information
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('Token:', token);
+        const response = await axios.get(
+          'https://6c8d-196-207-134-81.ngrok-free.app/chargingStations/getDashboardInfo',
+          {
+            params: {
+              token,
+            },
+          }
+        );
+        
+        
+
+        const { numberOfStations, amountOfCharge, moneyReceived } = response.data;
+        setNumberOfStations(numberOfStations);
+        setAmountOfCharge(amountOfCharge);
+        setMoneyReceived(moneyReceived);
+      } catch (error) {
+        console.error('Error fetching dashboard information:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures that the effect runs once when the component mounts
+
+
   return (
     <View style={styles.container}>
       {/* Box 1: Number of Stations */}
       <View style={styles.box}>
         <Text style={styles.boxTitle}>Number of Stations</Text>
-        <Text style={styles.boxContent}>10</Text>
+        <Text style={styles.boxContent}>{numberOfStations}</Text>
       </View>
-
-      {/* Box 2: Number of Clicked Stations */}
-      <View style={styles.box}>
-        <Text style={styles.boxTitle}>Clicked Stations</Text>
-        <Text style={styles.boxContent}>5</Text>
-      </View>
-
       {/* Box 3: Amount of Charge */}
       <View style={styles.box}>
         <Text style={styles.boxTitle}>Amount of Charge</Text>
-        <Text style={styles.boxContent}>80%</Text>
+        <Text style={styles.boxContent}>{`${amountOfCharge}%`}</Text>
       </View>
 
       {/* Box 4: Money Received */}
       <View style={styles.box}>
         <Text style={styles.boxTitle}>Money Received</Text>
-        <Text style={styles.boxContent}>$100</Text>
+        <Text style={styles.boxContent}>{`$${moneyReceived}`}</Text>
       </View>
     </View>
   );

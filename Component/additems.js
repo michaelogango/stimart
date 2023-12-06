@@ -4,6 +4,7 @@ import { RadioButton } from 'react-native-paper';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 const AddItemScreen = () => {
   const [stationName, setStationName] = useState('');
@@ -14,16 +15,12 @@ const AddItemScreen = () => {
   const handlePaymentMethodChange = (value) => {
     setPaymentMethod(value);
   };
-
   const handleSubmit = async () => {
     // Handle form submission
     const token = await AsyncStorage.getItem('token');
-    console.log('Station Name:', stationName);
-    console.log('Charging Stations:', chargingStations);
     console.log('Location:', location);
     console.log('Payment Method:', paymentMethod);
     console.log('Token:', token);
-
   
     try {
       // Get the JWT token from local storage
@@ -40,29 +37,33 @@ const AddItemScreen = () => {
   
       console.log('Response from backend:', response.data);
   
-      // Add further logic based on the response if needed
+      // Check if the response indicates success
+      if (response.status === 201) {
+        // Show an alert for successful update
+        Alert.alert('Success', 'Charging station added successfully', [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ]);
   
+        // Add further logic based on the response if needed
+      } else {
+        // Show an alert for other response statuses (handle error cases)
+        Alert.alert('Error', 'Failed to add charging station', [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ]);
+      }
     } catch (error) {
       console.error('Error during charging station submission:', error);
+  
+      // Show an alert for general errors
+      Alert.alert('Error', 'An error occurred. Please try again.', [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ]);
     }
   };
-  
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Name of Station"
-        value={stationName}
-        onChangeText={setStationName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Amount of Charging Stations"
-        value={chargingStations}
-        onChangeText={setChargingStations}
-        keyboardType="numeric"
-      />
+
        <GooglePlacesAutocomplete
   placeholder={'Add a charging location'}
   onPress={(data, details = null) => {
@@ -95,6 +96,13 @@ const AddItemScreen = () => {
   }}
   
 />
+      <TextInput
+        style={styles.input}
+        placeholder="Amount of Charging Stations"
+        value={chargingStations}
+        onChangeText={setChargingStations}
+        keyboardType="numeric"
+      />
 
       <View style={styles.radioContainer}>
         <Text>Payment Method:</Text>
