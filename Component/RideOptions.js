@@ -1,11 +1,12 @@
 import { View, Text,SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native'
-import React from 'react'
+import React ,{useEffect} from 'react'
 import tw from 'tailwind-react-native-classnames'
 import { Icon } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTravelTimeInformation } from '../Slices/navslice'
+import axios from 'axios'
 
 const data=[
   {
@@ -36,6 +37,34 @@ const data=[
 const RideOptions = ({navigation}) => {
   const [selected,setSelected]=useState(null);
   const travelTimeInformation=useSelector(selectTravelTimeInformation)
+
+  const [chargingStations, setChargingStations] = useState([]);
+
+  useEffect(() => {
+    const fetchChargingStations = async () => {
+      try {
+        // Make a GET request to the provided endpoint
+        const response = await axios.get('https://6c8d-196-207-134-81.ngrok-free.app/chargingStations/getAllChargingStations');
+        // Filter out data with missing coordinates
+        const filteredData = response.data.filter(station => 
+          station.chargingStations &&
+          station.chargingStations.length > 0 &&
+          station.chargingStations[0].location &&
+          station.chargingStations[0].location.coordinates &&
+          station.chargingStations[0].location.coordinates[0] !== null &&
+          station.chargingStations[0].location.coordinates[1] !== null
+        );        console.log('Filtered data:', filteredData);
+        // Update the state with the filtered charging stations
+        setChargingStations(filteredData);
+      } catch (error) {
+        console.error('Error fetching charging stations:', error);
+      }
+    };
+
+    // Fetch charging stations when the component mounts
+    fetchChargingStations();
+  }, []);
+
   return (
     <SafeAreaView style={tw`bg-white flex-grow`}>
       <View>
@@ -51,27 +80,22 @@ const RideOptions = ({navigation}) => {
     </Text>
     </View>
     <FlatList
-    data={data}
-    keyExtractor={(item)=>item.id}
-    renderItem={({item: {id,title,multiplier,image},item})=>(
-      <TouchableOpacity
-      onPress={()=>setSelected(item)}
-      style={tw`flex-row justify-between items-center px-10 ${id===selected?.id && "bg-gray-200"}`}
-      >
-       <Image 
-       style={{width:55,
-       height:55,
-       resizeMode:'contain'}}
-       source={item.image}/>
-<View style={tw`-ml-6`}>
-  <Text style={tw`text-base font-semibold `}>{title}</Text>
-  <Text>{travelTimeInformation?.duration.text}</Text>
-</View>
-<Text style={tw`text-base`}>Ksh50</Text>
-      </TouchableOpacity>
-
-    )}
-    />
+        data={chargingStations}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              // Handle the onPress event as needed
+              console.log('Charging Station Pressed:', item);
+            }}
+            style={{ padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.name}</Text>
+            <Text>{`Location: ${item.chargingStations[0].locationName}`}</Text>
+            <Text>{`Coordinates: ${item.chargingStations[0].location.coordinates[0]}, ${item.chargingStations[0].location.coordinates[1]}`}</Text>
+          </TouchableOpacity>
+        )}
+      />
     <View>
       <TouchableOpacity disabled={!selected} style={tw`bg-black py-3 m-4 rounded-md ${!selected && "bg-gray-300"}`}>
         <Text style={tw`text-center text-white text-lg `}>Choose {selected?.title}</Text>
