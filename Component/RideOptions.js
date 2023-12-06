@@ -76,7 +76,7 @@ const RideOptions = ({navigation}) => {
           type='fontawesome'/>
         </TouchableOpacity>
     <Text style={tw`text-center py-5 text-lg font-semibold`}>
-      Pick mode of transport- {travelTimeInformation?.distance.text}
+      Pick close Station- {travelTimeInformation?.distance.text}
     </Text>
     </View>
     <FlatList

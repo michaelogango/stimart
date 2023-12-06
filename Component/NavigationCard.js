@@ -11,7 +11,7 @@ import { Icon } from 'react-native-elements';
 
 
 
-const apikey='AIzaSyAQdNGyUCoUwUsu1wQpwcN6YBst3f_G7vU'
+const apikey='AIzaSyC6EFdTlrjLRjiLEzHoauP2CXM9ZLPHUgo'
 
 const NavigationCard = ({navigation}) => {
     const dispatch=useDispatch();
