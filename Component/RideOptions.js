@@ -82,7 +82,7 @@ const RideOptions = ({navigation}) => {
     </Text>
     </View>
     <FlatList
-        data={chargingStations}
+        data={chargingStations.slice().reverse()}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -90,8 +90,8 @@ const RideOptions = ({navigation}) => {
               // Handle the onPress event as needed
               console.log('Charging Station Pressed:', item);
               // send a alert
-              Alert.alert('Success', 'Charging station added successfully', [
-                { text: 'OK', onPress: () => console.log('OK Pressed') },
+              Alert.alert('Confirm', 'Confirm Location ? ', [
+                { text: 'Confirm', onPress: () => console.log('OK Pressed') },
               ]); 
 
             }}

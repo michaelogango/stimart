@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 const data=[
     {
         id:'123',
-        title:'Get your bus',
+        title:'Get your charger',
         image: require('../assets/images/car.png'),
         screen:"MapScreen"
       

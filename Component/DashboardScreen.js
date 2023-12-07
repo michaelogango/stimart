@@ -21,9 +21,7 @@ const DashboardScreen = () => {
             },
           }
         );
-        
-        
-
+  
         const { numberOfStations, amountOfCharge, moneyReceived } = response.data;
         setNumberOfStations(numberOfStations);
         setAmountOfCharge(amountOfCharge);
@@ -32,9 +30,15 @@ const DashboardScreen = () => {
         console.error('Error fetching dashboard information:', error);
       }
     };
-
+  
+    // Call fetchData immediately and then every 15 seconds
     fetchData();
-  }, []); // Empty dependency array ensures that the effect runs once when the component mounts
+    const intervalId = setInterval(fetchData, 15000);
+  
+    // Clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
+  
 
 
   return (
