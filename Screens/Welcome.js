@@ -1,13 +1,33 @@
 import { View, Text, Pressable } from 'react-native'
-import React from 'react'
+import React , {useEffect} from 'react'
 import {LinearGradient} from 'expo-linear-gradient'
 import {Image} from 'react-native'
 import {Dimensions} from 'react-native'
 import Button from '../Component/Button'
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Welcome = ({navigation}) => {
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem('token');
+      const role = await AsyncStorage.getItem('role');
+      if (token) {
+        if (role === 'Admin') {
+          navigation.navigate('AdminDash')
+        } 
+        if (role === 'Customer') {
+          navigation.navigate('HomeScreen')
+        }
+
+      }
+    };
+  
+    checkToken();
+  }, []);
+
 
   const loginButton = () => {
     navigation.navigate("Login")};

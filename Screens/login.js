@@ -15,11 +15,14 @@ const Login = ({navigation}) => {
   useEffect(() => {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem('token');
+      const role = await AsyncStorage.getItem('role');
       if (token) {
-        // Navigate if the token exists
-        //navigation.navigate('AdminDash');
-
-        console.log('Decoded token:', decodedToken);
+        if (role === 'Admin') {
+          navigation.navigate('AdminDash')
+        } 
+        if (role === 'Customer') {
+          navigation.navigate('HomeScreen')
+        }
 
       }
     };
@@ -45,6 +48,8 @@ const Login = ({navigation}) => {
       console.log("token",response.data.token)
       const token = response.data.token;
       await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('role', response.data.role);
+
         if (response.data.role === 'Admin') {
           navigation.navigate('AdminDash')
         } 

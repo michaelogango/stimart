@@ -5,8 +5,9 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // Import the FontAwes
 import { RadioButton } from 'react-native-paper';
 import Additems from '../Component/additems';
 import Dashboardscreen from '../Component/DashboardScreen';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeScreen = () => {
+
   return (
     <View style={styles.container}>
       <Dashboardscreen/>
@@ -59,12 +60,19 @@ const Dashboard = () => {
   );
 };
 
-const DashboardWrapper = () => {
+const DashboardWrapper = ({navigation}) => {
+  const logout = () => {
+    // Remove the token from storage
+    AsyncStorage.removeItem('token');
+    AsyncStorage.removeItem('role');
+    // Navigate to the AuthNavigator and set it as the root
+    navigation.navigate('Welcome');
+  }
   return (
     <View style={{ flex: 1 }}>
       <Dashboard />
-      <TouchableOpacity style={styles.plusButton}>
-        <Icon name="plus" color="white" size={30} />
+      <TouchableOpacity style={styles.plusButton} onPress={logout}>
+        <Text> Log Out </Text>
       </TouchableOpacity>
     </View>
   );
@@ -82,7 +90,7 @@ const styles = StyleSheet.create({
   },
   plusButton: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 55,
     right: 20,
     backgroundColor: '#3498db',
     borderRadius: 30,

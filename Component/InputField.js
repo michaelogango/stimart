@@ -24,12 +24,12 @@ export default function InputField ({label,icon,inputType,keyboardType,change, f
              />
     ):(
         (
-            <TextInput 
-            placeholder={label} 
-            keyboardType={keyboardType}
-            style={{flex:1, 
-                paddingVertical:0}} 
-                />
+          <TextInput 
+          placeholder={label} 
+          keyboardType={keyboardType}
+          style={{flex:1, paddingVertical:0}}
+          onChangeText={change}
+               />
         )
     )}
         {/* <TouchableOpacity onPress={fieldButtonFunction}>

@@ -25,12 +25,29 @@ import InputField from '../Component/InputField'
       const [open, setOpen] = useState(false);
       const [date, setDate] = useState(new Date());
       const [dobLabel, setDobLabel] = useState('');
-      const [mode, setMode] = useState('date');
       const [show, setShow] = useState(false);
       const [showAddLocation, setShowAddLocation] = useState(true);
       const [chargingLocations, setChargingLocations] = useState([]);
       const [Username,setUserName]=useState('')
 
+      useEffect(() => {
+        const checkToken = async () => {
+          const token = await AsyncStorage.getItem('token');
+          const role = await AsyncStorage.getItem('role');
+          if (token) {
+            if (role === 'Admin') {
+              navigation.navigate('AdminDash')
+            } 
+            if (role === 'Customer') {
+              navigation.navigate('HomeScreen')
+            }
+    
+          }
+        };
+      
+        checkToken();
+      }, []);
+      
 
      
 // Function to add a new charging location
@@ -74,6 +91,7 @@ const onSignUpPress = async () => {
     console.log(response.data);
     
     await AsyncStorage.setItem('token', token);
+    await AsyncStorage.setItem('role', role);
 
     // Navigate to the 'Welcome' screen
     console.log("here is role ", role)
@@ -251,17 +269,21 @@ const onSignUpPress = async () => {
          color="#666" 
          style={{marginRight:5, paddingVertical:0}}
          ></MaterialIcons>}
-         value={email} // Pass the state variable
+         value={password} // Pass the state variable
          change={(text) => setEmail(text)} // Pass the state update function
           />
     
-    <InputField
+ 
+          <InputField
         label={'Phone Number'}
-        icon={<Feather name='phone' size={20} color="#666" style={{ marginRight: 5, paddingVertical: 0 }} />}
-        inputType="numeric"
-        value={phoneNumber} // Pass the state variable
-        change={(text) => setPhoneNumber(text)} // Pass the state update function
-      />
+        icon= {<Ionicons name='ios-lock-closed-outline' 
+         size={20} color="#666" 
+         style={{marginRight:5, paddingVertical:0}}/>}
+         inputType="numeric"
+         value={password} // Pass the state variable
+         change={(text) => setPhoneNumber(text)} // Pass the state update function
+       
+          />
     
     
     <InputField

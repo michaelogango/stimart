@@ -7,6 +7,8 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectTravelTimeInformation } from '../Slices/navslice'
 import axios from 'axios'
+// import alert from react native 
+import { Alert } from 'react-native';
 
 const data=[
   {
@@ -87,6 +89,11 @@ const RideOptions = ({navigation}) => {
             onPress={() => {
               // Handle the onPress event as needed
               console.log('Charging Station Pressed:', item);
+              // send a alert
+              Alert.alert('Success', 'Charging station added successfully', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+              ]); 
+
             }}
             style={{ padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' }}
           >
