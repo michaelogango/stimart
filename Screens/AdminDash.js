@@ -30,7 +30,7 @@ const Dashboard = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: '#3498db',
+        activeTintColor: '#ff9900',
         inactiveTintColor: 'gray',
         labelStyle: {
           fontSize: 14,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 55,
     right: 20,
-    backgroundColor: '#3498db',
+    backgroundColor: '#ff9900',
     borderRadius: 30,
     padding: 15,
     elevation: 5, // Add elevation for a slight shadow effect

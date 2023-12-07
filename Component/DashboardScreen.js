@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   box: {
     width: '80%',
     height: 120,
-    backgroundColor: '#3498db', // Box color
+    backgroundColor: '#ff9900', // Box color
     borderRadius: 15,
     marginBottom: 20,
     padding: 15,
