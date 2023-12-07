@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TextInput,TouchableOpacity} from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -11,6 +11,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = ({navigation}) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem('token');
+      if (token) {
+        // Navigate if the token exists
+        //navigation.navigate('AdminDash');
+
+        console.log('Decoded token:', decodedToken);
+
+      }
+    };
+  
+    checkToken();
+  }, []);
+  
+  
 
   const handleLoginPress = async () => {
     console.log('email', email)

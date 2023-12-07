@@ -3,7 +3,6 @@ import { SafeAreaView } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather'
-import InputField from '../Component/InputField'
 import RadioForm from 'react-native-simple-radio-button'
 import { useEffect, useState } from 'react'
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
@@ -12,6 +11,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import InputField from '../Component/InputField'
 
 
    const Register = ({navigation}) => {
