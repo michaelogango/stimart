@@ -9,7 +9,7 @@ import NavigationCard from '../Component/NavigationCard';
 import RideOptions from '../Component/RideOptions';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import asun
+import
 
 
 const MapScreen = ({navigation}) => {
