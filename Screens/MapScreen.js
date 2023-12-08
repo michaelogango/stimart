@@ -17,7 +17,6 @@ const MapScreen = ({navigation}) => {
     // Remove the token from storage
     AsyncStorage.removeItem('token');
     AsyncStorage.removeItem('role');
-    // Navigate to the AuthNavigator and set it as the root
     navigation.navigate('Welcome');
   }
     const Stack = createStackNavigator();
@@ -26,7 +25,7 @@ const MapScreen = ({navigation}) => {
     <View>
 
       <TouchableOpacity style={tw`absolute top-16 left-8 z-50 p-3 rounded-full shadow-lg bg-gray-200 `}
-      
+
       onPress={logout}>
         <Icon
         name="home"/>
