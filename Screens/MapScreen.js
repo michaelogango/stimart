@@ -24,9 +24,8 @@ const MapScreen = ({navigation}) => {
 
   return (
     <View>
-
-      <TouchableOpacity style={tw`absolute top-16 left-8 z-50 p-3 rounded-full shadow-lg bg-gray-200 `}
       
+      <TouchableOpacity style={tw`absolute top-16 left-8 z-50 p-3 rounded-full shadow-lg bg-gray-200 `}
       onPress={logout}>
         <Icon
         name="home"/>
