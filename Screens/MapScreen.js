@@ -28,7 +28,7 @@ const MapScreen = ({navigation}) => {
       onPress={logout}>
         <Icon
         name="home"/>
-        <Text> LogOut</Text>
+        <Text> Logout</Text>
 
   
       </TouchableOpacity>
